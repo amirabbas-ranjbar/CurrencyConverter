@@ -14,7 +14,7 @@ public class CurrencyController : ControllerBase
         return Ok(result);
     }
     [HttpGet]
-    public IActionResult Rate(string from,string to,decimal amount)
+    public IActionResult Rate(string from,string to)
     {
         var service = CurrencyConverterService.Instance;
         var result = service.Rate(from.ToUpper(), to.ToUpper());
