@@ -10,12 +10,6 @@ public sealed class CurrencyConverterService : ICurrencyConverterService
     private CurrencyConverterService()
     {
         _currencyGraph = new CurrencyGraph();
-
-        // Add your initial conversion rates
-        _currencyGraph.AddRate("USD", "CAD", 1.34m);
-        _currencyGraph.AddRate("CAD", "GBP", 0.58m);
-        _currencyGraph.AddRate("USD", "EUR", 0.86m);
-        // Add more conversion rates as needed
     }
 
     public static CurrencyConverterService Instance
@@ -37,6 +31,19 @@ public sealed class CurrencyConverterService : ICurrencyConverterService
         }
     }
 
+    public void ClearConfiguration()
+    {
+        _currencyGraph.Clear();
+    }
+    public void UpdateConfiguration(IEnumerable<Tuple<string, string, decimal>> conversionRates)
+    {
+        ClearConfiguration(); // Clear existing configuration
+
+        foreach (var rate in conversionRates)
+        {
+            _currencyGraph.AddRate(rate.Item1.ToUpper(), rate.Item2.ToUpper(), rate.Item3);
+        }
+    }
     public decimal Convert(string fromCurrency, string toCurrency, decimal amount)
     {
         if (!_currencyGraph.ContainsCurrency(fromCurrency) || !_currencyGraph.ContainsCurrency(toCurrency))

@@ -3,11 +3,15 @@ namespace CurrencyConverter;
 public class CurrencyGraph
 {
     private readonly Dictionary<string, Dictionary<string, decimal>> _graph;
-
     public CurrencyGraph()
     {
         _graph = new Dictionary<string, Dictionary<string, decimal>>();
     }
+
+    public void Clear()
+    {
+        _graph.Clear();
+    } 
 
     public void AddRate(string fromCurrency, string toCurrency, decimal rate)
     {
